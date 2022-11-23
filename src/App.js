@@ -8,6 +8,7 @@ import TopSales from './components/TopSales/TopSales';
 import Catalog from './components/Catalog/Catalog';
 import Footer from './components/Footer/Footer';
 import About from './components/About/About';
+import Contacts from './components/Contacts/Contacts';
 
 export default function App() {
   return (
@@ -18,11 +19,12 @@ export default function App() {
           <Routes>
             <Route exact path='/' element={ 
               <>
-                < TopSales />
-                < Catalog />
+                <TopSales />
+                <Catalog />
               </> 
             }/>
-            <Route path='/about' element={ <About />}/>
+            <Route path='/about' element={ <About /> } />
+            <Route path='/contacts' element={ <Contacts /> } />
           </Routes>
         </Main>
         <Footer />

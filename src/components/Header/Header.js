@@ -24,7 +24,7 @@ function Header() {
                   <NavLink className="nav-link" to="/about">О магазине</NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/contacts.html">Контакты</NavLink>
+                  <NavLink className="nav-link" to="/contacts">Контакты</NavLink>
                 </li>
               </ul>
               <div>
