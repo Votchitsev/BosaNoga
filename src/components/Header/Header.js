@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import headerLogo from './img/header-logo.png'
 
@@ -8,22 +8,22 @@ function Header() {
       <div className="row">
         <div className="col">
           <nav className="navbar navbar-expand-sm navbar-light bg-light">
-            <Link className="navbar-brand" href="/">
+            <Link className="navbar-brand" to="/">
             <img src={ headerLogo } alt="Bosa Noga" />
             </Link>
             <div className="collapse navbar-collapse" id="navbarMain">
               <ul className="navbar-nav mr-auto">
-                <li className="nav-item active">
-                  <Link className="nav-link" href="/">Главная</Link>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/">Главная</NavLink>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/catalog.html">Каталог</a>
+                  <NavLink className="nav-link" to="/catalog.html">Каталог</NavLink>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/about.html">О магазине</a>
+                  <NavLink className="nav-link" to="/about.html">О магазине</NavLink>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/contacts.html">Контакты</a>
+                  <NavLink className="nav-link" to="/contacts.html">Контакты</NavLink>
                 </li>
               </ul>
               <div>
