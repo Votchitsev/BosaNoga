@@ -6,6 +6,7 @@ import Banner from './components/Banner/Banner';
 import Main from './components/Main/Main';
 import TopSales from './components/TopSales/TopSales';
 import Catalog from './components/Catalog/Catalog';
+import Footer from './components/Footer/Footer';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
             }/>
           </Routes>
         </Main>
+        <Footer />
     </BrowserRouter>
   )
 }
