@@ -4,7 +4,7 @@ import headerLogo from './img/header-logo.png'
 
 function Header() {
     return(
-    <header class="container">
+    <header className="container">
       <div className="row">
         <div className="col">
           <nav className="navbar navbar-expand-sm navbar-light bg-light">
@@ -28,14 +28,14 @@ function Header() {
               </ul>
               <div>
                 <div className="header-controls-pics">
-                  <div data-id="search-expander" class="header-controls-pic header-controls-search"></div>
+                  <div data-id="search-expander" className="header-controls-pic header-controls-search"></div>
                   {/* <!-- Do programmatic navigation on click to /cart.html --> */}
                   <div className="header-controls-pic header-controls-cart">
                     <div className="header-controls-cart-full">1</div>
                     <div className="header-controls-cart-menu"></div>
                   </div>
                 </div>
-                <form data-id="search-form" class="header-controls-search-form form-inline invisible">
+                <form data-id="search-form" className="header-controls-search-form form-inline invisible">
                   <input className="form-control" placeholder="Поиск" />
                 </form>
               </div>
