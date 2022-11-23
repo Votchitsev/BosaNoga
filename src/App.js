@@ -4,7 +4,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Banner from './components/Banner/Banner';
 import Main from './components/Main/Main';
-import TopSalesCatalogFragment from './components/MainPageFragment/MainPageFragment';
+import TopSales from './components/TopSales/TopSales';
+import Catalog from './components/Catalog/Catalog';
 
 export default function App() {
   return (
@@ -13,7 +14,12 @@ export default function App() {
         <Main>
         <Banner />
           <Routes>
-            <Route path='/' element={ <TopSalesCatalogFragment/> }/>
+            <Route path='/' element={ 
+              <>
+                < TopSales />
+                < Catalog />
+              </> 
+            }/>
           </Routes>
         </Main>
     </BrowserRouter>
