@@ -24,6 +24,7 @@ export default function App() {
                 <Catalog />
               </> 
             }/>
+            <Route path='/catalog' element={ <Catalog /> } />
             <Route path='/about' element={ <About /> } />
             <Route path='/contacts' element={ <Contacts /> } />
             <Route path='*' element={ <NotFoundPage />} />

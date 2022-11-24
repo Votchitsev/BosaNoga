@@ -18,7 +18,7 @@ function Header() {
                   <NavLink className="nav-link" to="/">Главная</NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/catalog.html">Каталог</NavLink>
+                  <NavLink className="nav-link" to="/catalog">Каталог</NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/about">О магазине</NavLink>
