@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -22,19 +23,23 @@ root.render(
     <Main>
       <Banner />
       <Routes>
-        <Route exact path='/' element={ 
-          <>
-            <TopSales />
-            <Catalog />
-          </> 
-        }/>
-        <Route path='/catalog' element={ <Catalog /> } />
-        <Route path='/about' element={ <About /> } />
-        <Route path='/contacts' element={ <Contacts /> } />
-        <Route path='/cart' element={ <Cart /> } />
-        <Route path='*' element={ <NotFoundPage />} />
+        <Route
+          exact
+          path="/"
+          element={(
+            <>
+              <TopSales />
+              <Catalog />
+            </>
+          )}
+        />
+        <Route path="/catalog" element={<Catalog />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contacts" element={<Contacts />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Main>
     <Footer />
-  </BrowserRouter>
+  </BrowserRouter>,
 );
