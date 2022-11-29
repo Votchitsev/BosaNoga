@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import request from '../../api/request';
 import Card from './Card';
+import Categories from './Categories';
 
 export default function Catalog() {
   const [items, setItems] = useState([]);
+  const [requestUrl, setRequestUrl] = useState('/api/items/');
 
   useEffect(() => {
-    request('/api/items/', 'GET')
+    request(requestUrl, 'GET')
       .then((response) => response.json())
       .then((json) => setItems(json));
-  }, []);
+  }, [requestUrl]);
 
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
+      <Categories catalogState={setRequestUrl} />
       {/* <div className="preloader">
         <span />
         <span />
