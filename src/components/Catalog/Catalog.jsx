@@ -2,20 +2,7 @@ import React, { useEffect, useState } from 'react';
 import request from '../../api/request';
 import Card from './Card';
 import Categories from './Categories';
-
-function createParamsObject(offset, categoryId) {
-  let result = {};
-
-  if (offset) {
-    result = { ...result, offset };
-  }
-
-  if (categoryId) {
-    result = { ...result, categoryId };
-  }
-
-  return result;
-}
+import createParamsObject from './createParamsObject';
 
 export default function Catalog() {
   const [items, setItems] = useState([]);
