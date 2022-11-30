@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import request from '../../api/request';
 import Card from './Card';
 import Categories from './Categories';
+import Search from './Search';
 import createParamsObject from './createParamsObject';
 
-export default function Catalog() {
+export default function Catalog({ catalogPage }) {
   const [items, setItems] = useState([]);
   const [categoryId, setCategoryId] = useState(null);
   const [offset, setOffset] = useState(null);
@@ -27,6 +29,7 @@ export default function Catalog() {
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
+      { catalogPage ? <Search /> : null }
       <Categories categoryId={setCategoryId} offset={setOffset} />
       {/* <div className="preloader">
         <span />
@@ -53,3 +56,7 @@ export default function Catalog() {
     </section>
   );
 }
+
+Catalog.propTypes = {
+  catalogPage: PropTypes.bool.isRequired,
+};
