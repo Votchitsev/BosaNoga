@@ -3,20 +3,44 @@ import request from '../../api/request';
 import Card from './Card';
 import Categories from './Categories';
 
+function createParamsObject(offset, categoryId) {
+  let result = {};
+
+  if (offset) {
+    result = { ...result, offset };
+  }
+
+  if (categoryId) {
+    result = { ...result, categoryId };
+  }
+
+  return result;
+}
+
 export default function Catalog() {
   const [items, setItems] = useState([]);
-  const [requestUrl, setRequestUrl] = useState('/api/items/');
+  const [categoryId, setCategoryId] = useState(null);
+  const [offset, setOffset] = useState(null);
 
   useEffect(() => {
-    request(requestUrl, 'GET')
+    request('/api/items/', 'GET', createParamsObject(offset, categoryId))
       .then((response) => response.json())
       .then((json) => setItems(json));
-  }, [requestUrl]);
+  }, [categoryId, offset]);
+
+  const onOffsetClick = () => {
+    if (!offset) {
+      setOffset(6);
+      return;
+    }
+
+    setOffset(offset + 6);
+  };
 
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
-      <Categories catalogState={setRequestUrl} />
+      <Categories categoryId={setCategoryId} offset={setOffset} />
       {/* <div className="preloader">
         <span />
         <span />
@@ -33,6 +57,12 @@ export default function Catalog() {
           />
         ))}
       </div>
+      { items.length > 6
+        ? (
+          <div className="text-center">
+            <button type="button" className="btn btn-outline-primary" onClick={onOffsetClick}>Загрузить ещё</button>
+          </div>
+        ) : null}
     </section>
   );
 }

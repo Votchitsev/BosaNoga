@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import request from '../../api/request';
 
-export default function Categories({ catalogState }) {
+export default function Categories({ categoryId, offset }) {
   const [categiries, setCategories] = useState([]);
 
   useEffect(() => {
@@ -12,14 +12,19 @@ export default function Categories({ catalogState }) {
       .then((json) => setCategories(json));
   }, []);
 
+  const onClickHandler = (id) => {
+    categoryId(id);
+    offset(null);
+  };
+
   return (
     <ul className="catalog-categories nav justify-content-center">
       <li className="nav-item">
-        <NavLink className="nav-link active" onClick={() => catalogState('/api/items/')}>Все</NavLink>
+        <NavLink className="nav-link active" onClick={() => onClickHandler(null)}>Все</NavLink>
       </li>
       { categiries.map((category) => (
         <li className="nav-item">
-          <NavLink className="nav-link" onClick={() => catalogState(`/api/items?categoryId=${category.id}`)}>{ category.title }</NavLink>
+          <NavLink className="nav-link" onClick={() => onClickHandler(category.id)}>{ category.title }</NavLink>
         </li>
       ))}
     </ul>
@@ -27,5 +32,6 @@ export default function Categories({ catalogState }) {
 }
 
 Categories.propTypes = {
-  catalogState: PropTypes.func.isRequired,
+  categoryId: PropTypes.func.isRequired,
+  offset: PropTypes.func.isRequired,
 };
