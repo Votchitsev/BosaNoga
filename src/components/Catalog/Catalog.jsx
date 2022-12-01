@@ -48,7 +48,7 @@ export default function Catalog({ catalogPage }) {
           />
         ))}
       </div>
-      { items.length > 6
+      { items.length >= 6
         ? (
           <div className="text-center">
             <button type="button" className="btn btn-outline-primary" onClick={onOffsetClick}>Загрузить ещё</button>
