@@ -1,17 +1,27 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { setSearchValue } from '../../reduxStore/slices/searchSlice';
 
-export default function Search({ setSearchValue }) {
+export default function Search({ setOffset }) {
   const searchInputValue = useRef();
+
+  const dispatch = useDispatch();
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    setSearchValue(searchInputValue.current.value);
+    setOffset(null);
+    dispatch(
+      setSearchValue(searchInputValue.current.value),
+    );
   };
 
   const onChangeHandler = () => {
     if (!searchInputValue.current.value.length) {
-      setSearchValue(null);
+      setOffset(null);
+      dispatch(
+        setSearchValue(null),
+      );
     }
   };
 
@@ -23,5 +33,5 @@ export default function Search({ setSearchValue }) {
 }
 
 Search.propTypes = {
-  setSearchValue: PropTypes.func.isRequired,
+  setOffset: PropTypes.func.isRequired,
 };

@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import catalogPageReducer from './slices/catalogPageSlice';
+import searchReducer from './slices/searchSlice';
 
 export default configureStore({
   reducer: {
-    catalogPage: catalogPageReducer,
+    search: searchReducer,
   },
 });

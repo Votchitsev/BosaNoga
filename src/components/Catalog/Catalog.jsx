@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import request from '../../api/request';
 import Card from './Card';
 import Categories from './Categories';
@@ -10,7 +11,9 @@ export default function Catalog({ catalogPage }) {
   const [items, setItems] = useState([]);
   const [categoryId, setCategoryId] = useState(null);
   const [offset, setOffset] = useState(null);
-  const [searchValue, setSearchValue] = useState(null);
+  // const [searchValue, setSearchValue] = useState(null);
+
+  const searchValue = useSelector((state) => state.search.searchValue);
 
   useEffect(() => {
     request('/api/items/', 'GET', createParamsObject(offset, categoryId, searchValue))
@@ -30,7 +33,7 @@ export default function Catalog({ catalogPage }) {
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
-      { catalogPage ? <Search setSearchValue={setSearchValue} /> : null }
+      { catalogPage ? <Search setOffset={setOffset} /> : null }
       <Categories categoryId={setCategoryId} offset={setOffset} />
       {/* <div className="preloader">
         <span />

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 import headerLogo from './img/header-logo.png';
 import './Header.css';
 
 function Header() {
+  const [searchIsAvailable] = useState('false');
   const navigate = useNavigate();
 
   const cartOnClickHandler = () => {
@@ -38,12 +39,12 @@ function Header() {
                 <div className="header-controls-pics">
                   <div data-id="search-expander" className="header-controls-pic header-controls-search" />
                   {/* <!-- Do programmatic navigation on click to /cart.html --> */}
-                  <div className="header-controls-pic header-controls-cart" role="link" tabIndex={0} onKeyUp={() => {}} onClick={cartOnClickHandler}>
+                  <div className="header-controls-pic header-controls-cart" role="link" tabIndex={0} onKeyUp={() => {}} onClick={searchIsAvailable ? cartOnClickHandler : null}>
                     <div className="header-controls-cart-full">1</div>
                     <div className="header-controls-cart-menu" />
                   </div>
                 </div>
-                <form data-id="search-form" className="header-controls-search-form form-inline invisible">
+                <form data-id="search-form" className={`header-controls-search-form form-inline ${'invisible'}`}>
                   <input className="form-control" placeholder="Поиск" />
                 </form>
               </div>
