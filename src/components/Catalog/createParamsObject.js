@@ -1,4 +1,4 @@
-export default function createParamsObject(offset, categoryId) {
+export default function createParamsObject(offset, categoryId, q) {
   let result = {};
 
   if (offset) {
@@ -7,6 +7,10 @@ export default function createParamsObject(offset, categoryId) {
 
   if (categoryId) {
     result = { ...result, categoryId };
+  }
+
+  if (q) {
+    result = { ...result, q };
   }
 
   return result;

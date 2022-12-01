@@ -10,12 +10,13 @@ export default function Catalog({ catalogPage }) {
   const [items, setItems] = useState([]);
   const [categoryId, setCategoryId] = useState(null);
   const [offset, setOffset] = useState(null);
+  const [searchValue, setSearchValue] = useState(null);
 
   useEffect(() => {
-    request('/api/items/', 'GET', createParamsObject(offset, categoryId))
+    request('/api/items/', 'GET', createParamsObject(offset, categoryId, searchValue))
       .then((response) => response.json())
       .then((json) => setItems(json));
-  }, [categoryId, offset]);
+  }, [categoryId, offset, searchValue]);
 
   const onOffsetClick = () => {
     if (!offset) {
@@ -29,7 +30,7 @@ export default function Catalog({ catalogPage }) {
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
-      { catalogPage ? <Search /> : null }
+      { catalogPage ? <Search setSearchValue={setSearchValue} /> : null }
       <Categories categoryId={setCategoryId} offset={setOffset} />
       {/* <div className="preloader">
         <span />

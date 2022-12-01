@@ -23,7 +23,7 @@ export default function Categories({ categoryId, offset }) {
         <NavLink className="nav-link active" onClick={() => onClickHandler(null)}>Все</NavLink>
       </li>
       { categiries.map((category) => (
-        <li className="nav-item">
+        <li className="nav-item" key={category.id}>
           <NavLink className="nav-link" onClick={() => onClickHandler(category.id)}>{ category.title }</NavLink>
         </li>
       ))}
