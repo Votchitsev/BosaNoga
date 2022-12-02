@@ -6,20 +6,23 @@ export const searchSlice = createSlice({
   initialState: {
     mainPageSearchIsAvailable: false,
     searchValue: null,
+    catalogSearchFormFillText: null,
   },
   reducers: {
-    openSearchField(state) {
-      state.mainPageSearchIsAvailable = true;
-    },
-    closeSearchField(state) {
-      state.mainPageSearchIsAvailable = false;
-    },
     setSearchValue(state, action) {
       state.searchValue = action.payload;
+    },
+    addCatalogSearchFormFillText(state, action) {
+      state.catalogSearchFormFillText = action.payload;
     },
   },
 });
 
-export const { setMainPage, setCatalogPage, setSearchValue } = searchSlice.actions;
+export const {
+  setMainPage,
+  setCatalogPage,
+  setSearchValue,
+  addCatalogSearchFormFillText,
+} = searchSlice.actions;
 
 export default searchSlice.reducer;

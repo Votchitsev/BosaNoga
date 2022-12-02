@@ -1,12 +1,20 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSearchValue } from '../../reduxStore/slices/searchSlice';
 
 export default function Search({ setOffset }) {
   const searchInputValue = useRef();
 
   const dispatch = useDispatch();
+
+  const fillText = useSelector((state) => state.search.catalogSearchFormFillText);
+
+  useEffect(() => {
+    if (fillText) {
+      searchInputValue.current.value = fillText;
+    }
+  }, [fillText]);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();

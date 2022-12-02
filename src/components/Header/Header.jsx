@@ -1,15 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
 import headerLogo from './img/header-logo.png';
 import './Header.css';
+import { setSearchValue, addCatalogSearchFormFillText } from '../../reduxStore/slices/searchSlice';
 
 function Header() {
-  const [searchIsAvailable] = useState('false');
+  const [searchIsAvailable, setSearchIsAvailable] = useState(false);
   const navigate = useNavigate();
 
   const cartOnClickHandler = () => {
     navigate('/cart');
+  };
+
+  const searchValue = useRef();
+
+  const dispatch = useDispatch();
+
+  const searchOnClickHandler = () => {
+    setSearchIsAvailable(true);
+  };
+
+  const searchOnSubmitHandler = (e) => {
+    e.preventDefault();
+
+    navigate('/catalog');
+
+    dispatch(
+      setSearchValue(searchValue.current.value),
+    );
+
+    dispatch(
+      addCatalogSearchFormFillText(searchValue.current.value),
+    );
+
+    searchValue.current.value = '';
+
+    setSearchIsAvailable(false);
   };
 
   return (
@@ -37,15 +64,19 @@ function Header() {
               </ul>
               <div>
                 <div className="header-controls-pics">
-                  <div data-id="search-expander" className="header-controls-pic header-controls-search" />
+                  <div data-id="search-expander" className="header-controls-pic header-controls-search" tabIndex="0" role="button" onKeyUp={() => {}} onClick={searchOnClickHandler} label="search" />
                   {/* <!-- Do programmatic navigation on click to /cart.html --> */}
                   <div className="header-controls-pic header-controls-cart" role="link" tabIndex={0} onKeyUp={() => {}} onClick={searchIsAvailable ? cartOnClickHandler : null}>
                     <div className="header-controls-cart-full">1</div>
                     <div className="header-controls-cart-menu" />
                   </div>
                 </div>
-                <form data-id="search-form" className={`header-controls-search-form form-inline ${'invisible'}`}>
-                  <input className="form-control" placeholder="Поиск" />
+                <form
+                  data-id="search-form"
+                  className={`header-controls-search-form form-inline ${searchIsAvailable ? '' : 'invisible'}`}
+                  onSubmit={searchOnSubmitHandler}
+                >
+                  <input className="form-control" placeholder="Поиск" ref={searchValue} />
                 </form>
               </div>
             </div>
