@@ -9,10 +9,6 @@ function Header() {
   const [searchIsAvailable, setSearchIsAvailable] = useState(false);
   const navigate = useNavigate();
 
-  const cartOnClickHandler = () => {
-    navigate('/cart');
-  };
-
   const searchValue = useRef();
 
   const dispatch = useDispatch();
@@ -66,10 +62,10 @@ function Header() {
                 <div className="header-controls-pics">
                   <div data-id="search-expander" className="header-controls-pic header-controls-search" tabIndex="0" role="button" onKeyUp={() => {}} onClick={searchOnClickHandler} label="search" />
                   {/* <!-- Do programmatic navigation on click to /cart.html --> */}
-                  <div className="header-controls-pic header-controls-cart" role="link" tabIndex={0} onKeyUp={() => {}} onClick={searchIsAvailable ? cartOnClickHandler : null}>
+                  <NavLink to="/cart" className="header-controls-pic header-controls-cart">
                     <div className="header-controls-cart-full">1</div>
                     <div className="header-controls-cart-menu" />
-                  </div>
+                  </NavLink>
                 </div>
                 <form
                   data-id="search-form"
