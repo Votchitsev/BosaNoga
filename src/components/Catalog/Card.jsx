@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
-export default function Card({ title, price, img }) {
+export default function Card({
+  id, title, price, img,
+}) {
   return (
     <div className="col-4">
       <div className="card catalog-item-card">
@@ -9,7 +12,7 @@ export default function Card({ title, price, img }) {
         <div className="card-body">
           <p className="card-text">{title}</p>
           <p className="card-text">{ `${price} руб.` }</p>
-          <a href="/products/1.html" className="btn btn-outline-primary">Заказать</a>
+          <NavLink to={`/catalog/${id}`} className="btn btn-outline-primary">Заказать</NavLink>
         </div>
       </div>
     </div>
@@ -17,6 +20,7 @@ export default function Card({ title, price, img }) {
 }
 
 Card.propTypes = {
+  id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   img: PropTypes.string.isRequired,

@@ -19,6 +19,7 @@ export default function TopSales() {
           {items.map((item) => (
             <Card
               key={item.id}
+              id={item.id}
               title={item.title}
               price={item.price}
               img={item.images[0]}

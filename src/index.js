@@ -14,6 +14,7 @@ import Footer from './components/Footer/Footer';
 import About from './components/About/About';
 import Contacts from './components/Contacts/Contacts';
 import Cart from './components/Cart/Cart';
+import Product from './components/Product/Product';
 import NotFoundPage from './components/NotFoundPage/NotFoundPage';
 import './index.css';
 
@@ -37,6 +38,7 @@ root.render(
             )}
           />
           <Route path="/catalog" element={<Catalog catalogPage />} />
+          <Route path="/catalog/:id" element={<Product />} />
           <Route path="/about" element={<About />} />
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/cart" element={<Cart />} />
