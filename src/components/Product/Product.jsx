@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import request from '../../api/request';
 import makeSrcSet from '../../services/makeSrcSet';
+import { add } from '../../reduxStore/slices/cartSlice';
 
 export default function Product() {
   const { id } = useParams();
@@ -9,6 +11,16 @@ export default function Product() {
   const [product, setProduct] = useState({});
   const [amount, setAmount] = useState(1);
   const [choosenSize, setChoosenSize] = useState(null);
+
+  const dispatch = useDispatch();
+
+  /**
+   * just for testing
+   */
+
+  const cart = useSelector((state) => state.cart.cart);
+
+  console.log(cart);
 
   const subOnClickHandler = () => {
     if (amount > 1) {
@@ -32,6 +44,18 @@ export default function Product() {
   };
 
   const sizesAvailable = () => product.sizes.filter((size) => size.avalible === true).length > 0;
+
+  const addProductToCartHandler = () => {
+    if (choosenSize) {
+      dispatch(
+        add({
+          product,
+          amount,
+          size: choosenSize,
+        }),
+      );
+    }
+  };
 
   useEffect(() => {
     request(`/api/items/${id}`, 'GET')
@@ -93,7 +117,7 @@ export default function Product() {
               </p>
             ) : null}
           </div>
-          { sizesAvailable ? <button className="btn btn-danger btn-block btn-lg" type="button">В корзину</button> : null }
+          { sizesAvailable ? <button className="btn btn-danger btn-block btn-lg" type="button" onClick={addProductToCartHandler}>В корзину</button> : null }
         </div>
       </div>
     </section>
