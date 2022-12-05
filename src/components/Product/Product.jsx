@@ -8,6 +8,7 @@ export default function Product() {
 
   const [product, setProduct] = useState({});
   const [amount, setAmount] = useState(1);
+  const [choosenSize, setChoosenSize] = useState(null);
 
   const subOnClickHandler = () => {
     if (amount > 1) {
@@ -21,6 +22,15 @@ export default function Product() {
     }
   };
 
+  const sizeOnClickHandler = (e) => {
+    if (e.target.textContent !== choosenSize) {
+      setChoosenSize(e.target.textContent);
+    } else {
+      setChoosenSize(null);
+    }
+    e.target.classList.toggle('selected');
+  };
+
   useEffect(() => {
     request(`/api/items/${id}`, 'GET')
       .then((response) => response.json())
@@ -32,7 +42,7 @@ export default function Product() {
       <h2 className="text-center">{product.title}</h2>
       <div className="row">
         <div className="col-5">
-          { product.images ? <img srcSet={makeSrcSet(product.images)} className="img-fluid" alt="proguct" /> : null }
+          { product.images ? <img srcSet={makeSrcSet(product.images)} className="img-fluid" alt="proguct" /> : '' }
         </div>
         <div className="col-7">
           <table className="table table-bordered">
@@ -66,7 +76,9 @@ export default function Product() {
           <div className="text-center">
             <p>
               Размеры в наличии:
-              { product.sizes ? product.sizes.map((size) => (size.avalible ? <span className="catalog-item-size">{size.size}</span> : null)) : null }
+              { product.sizes ? product.sizes.map(
+                (size) => (size.avalible ? <span className="catalog-item-size" tabIndex={0} role="button" onKeyUp={() => {}} onClick={sizeOnClickHandler}>{size.size}</span> : null),
+              ) : null }
             </p>
             <p>
               Количество:
