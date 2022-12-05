@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import request from '../../api/request';
 import makeSrcSet from '../../services/makeSrcSet';
 import { add } from '../../reduxStore/slices/cartSlice';
@@ -13,6 +13,8 @@ export default function Product() {
   const [choosenSize, setChoosenSize] = useState(null);
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   /**
    * just for testing
@@ -54,6 +56,8 @@ export default function Product() {
           size: choosenSize,
         }),
       );
+
+      navigate('/cart');
     }
   };
 
