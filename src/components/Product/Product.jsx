@@ -10,16 +10,15 @@ export default function Product() {
   const [amount, setAmount] = useState(1);
 
   const subOnClickHandler = () => {
-    setAmount(() => {
-      if (amount > 1) {
-        return amount - 1;
-      }
-      return amount;
-    });
+    if (amount > 1) {
+      setAmount(amount - 1);
+    }
   };
 
   const addOnClickHandler = () => {
-    setAmount(amount + 1);
+    if (amount < 10) {
+      setAmount(amount + 1);
+    }
   };
 
   useEffect(() => {
