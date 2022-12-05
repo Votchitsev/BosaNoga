@@ -31,6 +31,8 @@ export default function Product() {
     e.target.classList.toggle('selected');
   };
 
+  const sizesAvailable = () => product.sizes.filter((size) => size.avalible === true).length > 0;
+
   useEffect(() => {
     request(`/api/items/${id}`, 'GET')
       .then((response) => response.json())
@@ -77,25 +79,23 @@ export default function Product() {
             <p>
               Размеры в наличии:
               { product.sizes ? product.sizes.map(
-                (size) => (size.avalible ? <span className="catalog-item-size" tabIndex={0} role="button" onKeyUp={() => {}} onClick={sizeOnClickHandler}>{size.size}</span> : null),
+                (size) => (size.avalible ? <span className="catalog-item-size" key={size.size} tabIndex={0} role="button" onKeyUp={() => {}} onClick={sizeOnClickHandler}>{size.size}</span> : null),
               ) : null }
             </p>
-            <p>
-              Количество:
-              <span className="btn-group btn-group-sm pl-2">
-                <button className="btn btn-secondary" type="button" onClick={subOnClickHandler}>-</button>
-                <span className="btn btn-outline-primary">{ amount }</span>
-                <button className="btn btn-secondary" type="button" onClick={addOnClickHandler}>+</button>
-              </span>
-            </p>
+            { sizesAvailable ? (
+              <p>
+                Количество:
+                <span className="btn-group btn-group-sm pl-2">
+                  <button className="btn btn-secondary" type="button" onClick={subOnClickHandler}>-</button>
+                  <span className="btn btn-outline-primary">{ amount }</span>
+                  <button className="btn btn-secondary" type="button" onClick={addOnClickHandler}>+</button>
+                </span>
+              </p>
+            ) : null}
           </div>
-          <button className="btn btn-danger btn-block btn-lg" type="button">В корзину</button>
+          { sizesAvailable ? <button className="btn btn-danger btn-block btn-lg" type="button">В корзину</button> : null }
         </div>
       </div>
     </section>
   );
 }
-
-// Product.propTypes = {
-//   id: PropTypes.number.isRequired,
-// };
