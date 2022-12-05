@@ -1,12 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import request from '../../api/request';
-import makeSrcSet from '../../serices/makeSrcSet';
+import makeSrcSet from '../../services/makeSrcSet';
 
 export default function Product() {
   const { id } = useParams();
 
   const [product, setProduct] = useState({});
+  const [amount, setAmount] = useState(1);
+
+  const subOnClickHandler = () => {
+    setAmount(() => {
+      if (amount > 1) {
+        return amount - 1;
+      }
+      return amount;
+    });
+  };
+
+  const addOnClickHandler = () => {
+    setAmount(amount + 1);
+  };
 
   useEffect(() => {
     request(`/api/items/${id}`, 'GET')
@@ -58,9 +72,9 @@ export default function Product() {
             <p>
               Количество:
               <span className="btn-group btn-group-sm pl-2">
-                <button className="btn btn-secondary" type="button">-</button>
-                <span className="btn btn-outline-primary">1</span>
-                <button className="btn btn-secondary" type="button">+</button>
+                <button className="btn btn-secondary" type="button" onClick={subOnClickHandler}>-</button>
+                <span className="btn btn-outline-primary">{ amount }</span>
+                <button className="btn btn-secondary" type="button" onClick={addOnClickHandler}>+</button>
               </span>
             </p>
           </div>
