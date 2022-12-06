@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import request from '../../api/request';
 import makeSrcSet from '../../services/makeSrcSet';
@@ -16,13 +16,11 @@ export default function Product() {
 
   const navigate = useNavigate();
 
-  /**
-   * just for testing
-   */
-
-  const cart = useSelector((state) => state.cart.cart);
-
-  console.log(cart);
+  useEffect(() => {
+    request(`/api/items/${id}`, 'GET')
+      .then((response) => response.json())
+      .then((json) => setProduct(json));
+  }, [id]);
 
   const subOnClickHandler = () => {
     if (amount > 1) {
@@ -60,12 +58,6 @@ export default function Product() {
       navigate('/cart');
     }
   };
-
-  useEffect(() => {
-    request(`/api/items/${id}`, 'GET')
-      .then((response) => response.json())
-      .then((json) => setProduct(json));
-  }, [id]);
 
   return (
     <section className="catalog-item">

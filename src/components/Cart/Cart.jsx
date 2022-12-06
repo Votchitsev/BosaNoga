@@ -1,9 +1,22 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 export default function Cart() {
   const style = {
     maxWidth: '30rem',
     margin: '0 auto',
+  };
+
+  const cart = useSelector((state) => state.cart.cart);
+
+  const calculateTotalSum = () => {
+    const result = cart.reduce((previousValue, currentValue) => {
+      let previous = previousValue;
+      previous += (currentValue.amount * currentValue.product.price);
+      return previous;
+    }, 0);
+
+    return result;
   };
 
   return (
@@ -23,18 +36,20 @@ export default function Cart() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td><a href="/products/1.html">Босоножки MYER</a></td>
-              <td>18 US</td>
-              <td>1</td>
-              <td>34 000 руб.</td>
-              <td>34 000 руб.</td>
-              <td><button className="btn btn-outline-danger btn-sm" type="submit">Удалить</button></td>
-            </tr>
+            { cart.map((item) => (
+              <tr key={item.product.id}>
+                <td>1</td>
+                <td><a href="/products/1.html">{item.product.title}</a></td>
+                <td>{item.size}</td>
+                <td>{item.amount}</td>
+                <td>{item.product.price}</td>
+                <td>{`${item.amount * item.product.price} руб.`}</td>
+                <td><button className="btn btn-outline-danger btn-sm" type="submit">Удалить</button></td>
+              </tr>
+            ))}
             <tr>
               <td colSpan="5" className="text-right">Общая стоимость</td>
-              <td>34 000 руб.</td>
+              <td>{ `${calculateTotalSum()} руб.` }</td>
             </tr>
           </tbody>
         </table>
