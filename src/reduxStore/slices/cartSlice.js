@@ -1,14 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { addDataToStorage, getDataFromStorage } from '../../localStorage/localStorage';
 
 export const cartSlice = createSlice({
   name: 'cartSlice',
   initialState: {
-    cart: [],
+    cart: getDataFromStorage() ? getDataFromStorage() : [],
   },
   reducers: {
     add(state, action) {
       if (!state.cart.filter((item) => item.product.id === action.payload.product.id).length) {
         state.cart.push(action.payload);
+        addDataToStorage(state.cart);
       }
     },
     del(state, action) {
