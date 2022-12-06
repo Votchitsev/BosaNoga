@@ -1,5 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { del } from '../../reduxStore/slices/cartSlice';
 
 export default function Cart() {
   const style = {
@@ -9,6 +10,8 @@ export default function Cart() {
 
   const cart = useSelector((state) => state.cart.cart);
 
+  const dispatch = useDispatch();
+
   const calculateTotalSum = () => {
     const result = cart.reduce((previousValue, currentValue) => {
       let previous = previousValue;
@@ -17,6 +20,12 @@ export default function Cart() {
     }, 0);
 
     return result;
+  };
+
+  const deleteHandler = (e) => {
+    dispatch(
+      del(e.target.closest('tr').id),
+    );
   };
 
   return (
@@ -37,14 +46,14 @@ export default function Cart() {
           </thead>
           <tbody>
             { cart.map((item) => (
-              <tr key={item.product.id}>
+              <tr key={item.product.id} id={item.product.id}>
                 <td>1</td>
                 <td><a href="/products/1.html">{item.product.title}</a></td>
                 <td>{item.size}</td>
                 <td>{item.amount}</td>
                 <td>{item.product.price}</td>
                 <td>{`${item.amount * item.product.price} руб.`}</td>
-                <td><button className="btn btn-outline-danger btn-sm" type="submit">Удалить</button></td>
+                <td><button className="btn btn-outline-danger btn-sm" type="submit" onClick={deleteHandler}>Удалить</button></td>
               </tr>
             ))}
             <tr>

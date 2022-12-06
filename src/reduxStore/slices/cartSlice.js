@@ -11,9 +11,13 @@ export const cartSlice = createSlice({
         state.cart.push(action.payload);
       }
     },
+    del(state, action) {
+      const deleteditem = state.cart.find((item) => item.product.id === action.payload);
+      state.cart.splice(state.cart.indexOf(deleteditem), 1);
+    },
   },
 });
 
-export const { add } = cartSlice.actions;
+export const { add, del } = cartSlice.actions;
 
 export default cartSlice.reducer;
