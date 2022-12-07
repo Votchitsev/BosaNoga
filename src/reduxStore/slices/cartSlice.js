@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addDataToStorage, getDataFromStorage } from '../../localStorage/localStorage';
+import { addDataToStorage as updateStorageData, getDataFromStorage } from '../../localStorage/localStorage';
 
 export const cartSlice = createSlice({
   name: 'cartSlice',
@@ -8,14 +8,25 @@ export const cartSlice = createSlice({
   },
   reducers: {
     add(state, action) {
-      if (!state.cart.filter((item) => item.product.id === action.payload.product.id).length) {
-        state.cart.push(action.payload);
-        addDataToStorage(state.cart);
+      const existingProduct = state.cart.find(
+        (product) => product.product.id === action.payload.product.id
+        && product.size === action.payload.size,
+      );
+
+      if (existingProduct) {
+        const s = state;
+        s.cart[state.cart.indexOf(existingProduct)].amount += action.payload.amount;
+        updateStorageData(state.cart);
+        return;
       }
+
+      state.cart.push(action.payload);
+      updateStorageData(state.cart);
     },
     del(state, action) {
       const deleteditem = state.cart.find((item) => item.product.id === action.payload);
       state.cart.splice(state.cart.indexOf(deleteditem), 1);
+      updateStorageData(state.cart);
     },
   },
 });

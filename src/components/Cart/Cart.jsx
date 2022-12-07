@@ -46,7 +46,7 @@ export default function Cart() {
           </thead>
           <tbody>
             { cart.map((item) => (
-              <tr key={item.product.id} id={item.product.id}>
+              <tr key={item.product.id + item.size} id={item.product.id}>
                 <td>1</td>
                 <td><a href="/products/1.html">{item.product.title}</a></td>
                 <td>{item.size}</td>
