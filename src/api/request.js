@@ -1,6 +1,6 @@
 import ApiBaseUrl from '../config';
 
-export default function request(url, method, params = null) {
+export default function request(url, method, params = null, body = null) {
   let result;
 
   function addParamsToUrl() {
@@ -20,6 +20,17 @@ export default function request(url, method, params = null) {
 
   if (method === 'GET') {
     result = fetch(`${ApiBaseUrl + url}${params !== null ? addParamsToUrl() : ''}`);
+  }
+
+  if (method === 'POST') {
+    result = fetch(`${ApiBaseUrl + url}${params !== null ? addParamsToUrl() : ''}`, {
+      method,
+      body: JSON.stringify(body),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
+    });
   }
 
   return result;

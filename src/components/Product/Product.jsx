@@ -40,7 +40,6 @@ export default function Product() {
     } else {
       setChoosenSize(null);
     }
-    // e.target.classList.toggle('selected');
   };
 
   const sizesAvailable = () => product.sizes.filter((size) => size.avalible === true).length > 0;

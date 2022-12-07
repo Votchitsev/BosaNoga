@@ -28,9 +28,13 @@ export const cartSlice = createSlice({
       state.cart.splice(state.cart.indexOf(deleteditem), 1);
       updateStorageData(state.cart);
     },
+    reset(state) {
+      const s = state;
+      s.cart = [];
+    },
   },
 });
 
-export const { add, del } = cartSlice.actions;
+export const { add, del, reset } = cartSlice.actions;
 
 export default cartSlice.reducer;

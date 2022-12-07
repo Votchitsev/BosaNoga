@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { del } from '../../reduxStore/slices/cartSlice';
+import { useNavigate } from 'react-router-dom';
+import request from '../../api/request';
+import { addDataToStorage as updateStorage } from '../../localStorage/localStorage';
+import { del, reset } from '../../reduxStore/slices/cartSlice';
 
 export default function Cart() {
   const style = {
@@ -11,6 +14,12 @@ export default function Cart() {
   const cart = useSelector((state) => state.cart.cart);
 
   const dispatch = useDispatch();
+
+  const phone = useRef();
+  const address = useRef();
+  const agreement = useRef();
+
+  const navigate = useNavigate();
 
   const calculateTotalSum = () => {
     const result = cart.reduce((previousValue, currentValue) => {
@@ -26,6 +35,42 @@ export default function Cart() {
     dispatch(
       del(e.target.closest('tr').id),
     );
+  };
+
+  const sendOrder = (e) => {
+    e.preventDefault();
+
+    if (agreement.current.checked && cart.length) {
+      request('/api/order', 'POST', null, {
+        owner: {
+          phone: phone.current.value,
+          address: address.current.value,
+        },
+        items: cart.map((item) => {
+          const result = {
+            id: item.product.id,
+            price: item.product.price,
+            count: item.amount,
+          };
+
+          return result;
+        }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            dispatch(
+              reset(),
+            );
+            updateStorage(null);
+            // eslint-disable-next-line no-alert
+            alert('Заказ успешно оформлен');
+            phone.current.value = '';
+            address.current.value = '';
+            agreement.current.checked = false;
+            navigate('/');
+          }
+        });
+    }
   };
 
   return (
@@ -66,22 +111,22 @@ export default function Cart() {
       <section className="order">
         <h2 className="text-center">Оформить заказ</h2>
         <div className="card" style={style}>
-          <form className="card-body">
+          <form className="card-body" onSubmit={sendOrder}>
             <div className="form-group">
               <label htmlFor="phone">
                 Телефон
-                <input className="form-control" id="phone" placeholder="Ваш телефон" />
+                <input className="form-control" id="phone" placeholder="Ваш телефон" ref={phone} />
               </label>
             </div>
             <div className="form-group">
               <label htmlFor="address">
                 Адрес доставки
-                <input className="form-control" id="address" placeholder="Адрес доставки" />
+                <input className="form-control" id="address" placeholder="Адрес доставки" ref={address} />
               </label>
             </div>
             <div className="form-group form-check">
               <label className="form-check-label" htmlFor="agreement">
-                <input type="checkbox" className="form-check-input" id="agreement" />
+                <input type="checkbox" className="form-check-input" id="agreement" ref={agreement} />
                 Согласен с правилами доставки
               </label>
             </div>
