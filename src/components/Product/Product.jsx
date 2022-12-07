@@ -40,7 +40,7 @@ export default function Product() {
     } else {
       setChoosenSize(null);
     }
-    e.target.classList.toggle('selected');
+    // e.target.classList.toggle('selected');
   };
 
   const sizesAvailable = () => product.sizes.filter((size) => size.avalible === true).length > 0;
@@ -99,7 +99,7 @@ export default function Product() {
             <p>
               Размеры в наличии:
               { product.sizes ? product.sizes.map(
-                (size) => (size.avalible ? <span className="catalog-item-size" key={size.size} tabIndex={0} role="button" onKeyUp={() => {}} onClick={sizeOnClickHandler}>{size.size}</span> : null),
+                (size) => (size.avalible ? <span className={`catalog-item-size ${size.size === choosenSize ? 'selected' : null}`} key={size.size} tabIndex={0} role="button" onKeyUp={() => {}} onClick={sizeOnClickHandler}>{size.size}</span> : null),
               ) : null }
             </p>
             { sizesAvailable ? (
