@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import headerLogo from './img/header-logo.png';
 import './Header.css';
 import { setSearchValue, addCatalogSearchFormFillText } from '../../reduxStore/slices/searchSlice';
@@ -12,6 +12,8 @@ function Header() {
   const searchValue = useRef();
 
   const dispatch = useDispatch();
+
+  const itemsInCart = useSelector((state) => state.cart.cart).length;
 
   const searchOnClickHandler = () => {
     setSearchIsAvailable(true);
@@ -63,7 +65,7 @@ function Header() {
                   <div data-id="search-expander" className="header-controls-pic header-controls-search" tabIndex="0" role="button" onKeyUp={() => {}} onClick={searchOnClickHandler} label="search" />
                   {/* <!-- Do programmatic navigation on click to /cart.html --> */}
                   <NavLink to="/cart" className="header-controls-pic header-controls-cart">
-                    <div className="header-controls-cart-full">1</div>
+                    { itemsInCart ? <div className="header-controls-cart-full">{itemsInCart}</div> : null }
                     <div className="header-controls-cart-menu" />
                   </NavLink>
                 </div>
