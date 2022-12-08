@@ -6,20 +6,36 @@ import Card from './Card';
 import Categories from './Categories';
 import Search from './Search';
 import createParamsObject from './createParamsObject';
+import Loader from '../Loader/Loader';
 
 export default function Catalog({ catalogPage }) {
   const [items, setItems] = useState([]);
+  const [categiries, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState(null);
   const [offset, setOffset] = useState(null);
-  // const [searchValue, setSearchValue] = useState(null);
+  const [catalogIsLoaded, setCatalogIsLoaded] = useState(false);
+  const [categiriesIsLoaded, setCategoriesIsLoaded] = useState(false);
 
   const searchValue = useSelector((state) => state.search.searchValue);
 
   useEffect(() => {
+    setCatalogIsLoaded(false);
     request('/api/items/', 'GET', createParamsObject(offset, categoryId, searchValue))
       .then((response) => response.json())
-      .then((json) => setItems(json));
+      .then((json) => {
+        setItems(json);
+        setCatalogIsLoaded(true);
+      });
   }, [categoryId, offset, searchValue]);
+
+  useEffect(() => {
+    request('/api/categories/', 'GET')
+      .then((response) => response.json())
+      .then((json) => {
+        setCategories(json);
+        setCategoriesIsLoaded(true);
+      });
+  }, []);
 
   const onOffsetClick = () => {
     if (!offset) {
@@ -33,31 +49,33 @@ export default function Catalog({ catalogPage }) {
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
-      { catalogPage ? <Search setOffset={setOffset} /> : null }
-      <Categories categoryId={setCategoryId} offset={setOffset} />
-      {/* <div className="preloader">
-        <span />
-        <span />
-        <span />
-        <span />
-      </div> */}
-      <div className="row">
-        { items.map((item) => (
-          <Card
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            price={item.price}
-            img={item.images[0]}
+      { (catalogIsLoaded && categiriesIsLoaded) ? (
+        <>
+          { catalogPage ? <Search setOffset={setOffset} /> : null }
+          <Categories
+            categoryId={setCategoryId}
+            offset={setOffset}
+            categiries={categiries}
           />
-        ))}
-      </div>
-      { items.length >= 6
-        ? (
-          <div className="text-center">
-            <button type="button" className="btn btn-outline-primary" onClick={onOffsetClick}>Загрузить ещё</button>
+          <div className="row">
+            { items.map((item) => (
+              <Card
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                price={item.price}
+                img={item.images[0]}
+              />
+            ))}
           </div>
-        ) : null}
+          { items.length >= 6
+            ? (
+              <div className="text-center">
+                <button type="button" className="btn btn-outline-primary" onClick={onOffsetClick}>Загрузить ещё</button>
+              </div>
+            ) : null}
+        </>
+      ) : <Loader /> }
     </section>
   );
 }

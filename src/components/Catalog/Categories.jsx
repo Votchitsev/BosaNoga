@@ -1,17 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import request from '../../api/request';
+// import request from '../../api/request';
 
-export default function Categories({ categoryId, offset }) {
-  const [categiries, setCategories] = useState([]);
-
-  useEffect(() => {
-    request('/api/categories/', 'GET')
-      .then((response) => response.json())
-      .then((json) => setCategories(json));
-  }, []);
-
+export default function Categories({ categoryId, offset, categiries }) {
   const onClickHandler = (id) => {
     categoryId(id);
     offset(null);
@@ -34,4 +26,5 @@ export default function Categories({ categoryId, offset }) {
 Categories.propTypes = {
   categoryId: PropTypes.func.isRequired,
   offset: PropTypes.func.isRequired,
+  categiries: PropTypes.element.isRequired,
 };
