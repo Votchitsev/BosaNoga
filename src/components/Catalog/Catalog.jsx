@@ -49,9 +49,9 @@ export default function Catalog({ catalogPage }) {
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
+      { catalogPage ? <Search setOffset={setOffset} /> : null }
       { (catalogIsLoaded && categiriesIsLoaded) ? (
         <>
-          { catalogPage ? <Search setOffset={setOffset} /> : null }
           <Categories
             categoryId={setCategoryId}
             offset={setOffset}
