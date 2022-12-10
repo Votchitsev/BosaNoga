@@ -26,5 +26,5 @@ export default function Categories({ categoryId, offset, categiries }) {
 Categories.propTypes = {
   categoryId: PropTypes.func.isRequired,
   offset: PropTypes.func.isRequired,
-  categiries: PropTypes.element.isRequired,
+  categiries: PropTypes.instanceOf(Array).isRequired,
 };
