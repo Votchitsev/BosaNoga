@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import request from '../../api/request';
 import Card from './Card';
 import Categories from './Categories';
@@ -17,25 +18,42 @@ export default function Catalog({ catalogPage }) {
   const [categiriesIsLoaded, setCategoriesIsLoaded] = useState(false);
 
   const searchValue = useSelector((state) => state.search.searchValue);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setCatalogIsLoaded(false);
-    request('/api/items/', 'GET', createParamsObject(offset, categoryId, searchValue))
-      .then((response) => response.json())
-      .then((json) => {
-        setItems(json);
-        setCatalogIsLoaded(true);
-      });
-  }, [categoryId, offset, searchValue]);
+    const f = () => {
+      setCatalogIsLoaded(false);
+      request('/api/items/', 'GET', createParamsObject(offset, categoryId, searchValue))
+        .then((response) => response.json())
+        .then((json) => {
+          setItems(json);
+          setCatalogIsLoaded(true);
+        })
+        .catch((error) => {
+          alert(error);
+          f();
+        });
+    };
+
+    f();
+  }, [categoryId, offset, searchValue, navigate]);
 
   useEffect(() => {
-    request('/api/categories/', 'GET')
-      .then((response) => response.json())
-      .then((json) => {
-        setCategories(json);
-        setCategoriesIsLoaded(true);
-      });
-  }, []);
+    const f = () => {
+      request('/api/categories/', 'GET')
+        .then((response) => response.json())
+        .then((json) => {
+          setCategories(json);
+          setCategoriesIsLoaded(true);
+        })
+        .catch((error) => {
+          alert(error);
+          f();
+        });
+    };
+
+    f();
+  }, [navigate]);
 
   const onOffsetClick = () => {
     if (!offset) {

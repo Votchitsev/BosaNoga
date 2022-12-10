@@ -8,7 +8,8 @@ export default function TopSales() {
   useEffect(() => {
     request('/api/top-sales', 'GET')
       .then((response) => response.json())
-      .then((json) => setItems(json));
+      .then((json) => setItems(json))
+      .catch((error) => alert(error));
   }, []);
 
   return (
