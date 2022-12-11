@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -19,12 +20,18 @@ export default function Product() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    request(`/api/items/${id}`, 'GET')
-      .then((response) => response.json())
-      .then((json) => {
-        setProduct(json);
-        setLoaded(true);
-      });
+    const f = () => {
+      request(`/api/items/${id}`, 'GET')
+        .then((response) => response.json())
+        .then((json) => {
+          setProduct(json);
+          setLoaded(true);
+        }).catch((error) => {
+          alert(error);
+          f();
+        });
+    };
+    f();
   }, [id]);
 
   const subOnClickHandler = () => {
